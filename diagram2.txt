@@ -1,0 +1,31 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant Browser
+    participant Server
+
+    User->>Browser: Navigate to https://studies.cs.helsinki.fi/exampleapp/spa
+    
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate Server
+    Server-->>Browser: HTML Document
+    deactivate Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate Server
+    Server-->>Browser: main.css
+    deactivate Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate Server
+    Server-->>Browser: spa.js
+    deactivate Server
+
+    Note over Browser: Browser executes spa.js, which requests raw JSON data
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate Server
+    Server-->>Browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ...]
+    deactivate Server
+
+    Note over Browser: Browser executes callback to dynamically render notes onto the DOM

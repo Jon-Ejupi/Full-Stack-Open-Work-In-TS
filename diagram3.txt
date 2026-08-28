@@ -1,0 +1,14 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant Browser
+    participant Server
+
+    User->>Browser: Write note and click Save
+    Note over Browser: JS intercepts event (e.preventDefault()), adds note to local array, and re-renders DOM
+
+    Browser->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa (JSON payload)
+    activate Server
+    Note over Server: Server saves new note to memory/database
+    Server-->>Browser: HTTP 201 Created {"message":"note created"}
+    deactivate Server

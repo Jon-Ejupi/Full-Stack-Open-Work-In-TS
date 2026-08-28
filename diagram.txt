@@ -1,0 +1,36 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant Browser
+    participant Server
+
+    User->>Browser: Write note and click Save
+    Browser->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate Server
+    Note over Server: Server adds new note object to the array
+    Server-->>Browser: HTTP 302 (URL Redirect to /exampleapp/notes)
+    deactivate Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate Server
+    Server-->>Browser: HTML Document
+    deactivate Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate Server
+    Server-->>Browser: main.css
+    deactivate Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate Server
+    Server-->>Browser: main.js
+    deactivate Server
+
+    Note over Browser: Browser executes JavaScript to fetch data.json
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate Server
+    Server-->>Browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ...]
+    deactivate Server
+https://github.com/Jon-Ejupi/Full-Stack-Open-Work-In-TS
+    Note over Browser: Browser executes callback function rendering all notes
